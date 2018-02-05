@@ -2,39 +2,61 @@ package ar.com.gep.test.entity;
 
 import java.io.Serializable;
 
-import ar.com.gep.test.dao.impl.GenericDAOImpl.Company;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
+@Entity
+@Table(name = "Car")
 public class Car implements Serializable {
 
-	private static final long serialVersionUID = 4850561970178844269L;
+    private static final long serialVersionUID = 4850561970178844269L;
 
-	private Integer year;
-	private Company company;
+    @Id
+    @Column(name = "ID")
+    @GeneratedValue
+    private Integer id;
 
-	public Car(Integer year, Company company) {
-		this.year = year;
-		this.company = company;
-	}
+    @Column(name = "anio")
+    private Integer year;
 
-	public Car() {
-		this.year = null;
-		this.company = null;
-	}
+    @Column(name = "compania")
+    private String company;
 
-	public Integer getYear() {
-		return year;
-	}
+    public Car(Integer year, String company) {
+        this.year = year;
+        this.company = company;
+    }
 
-	public void setYear(Integer year) {
-		this.year = year;
-	}
+    public Car() {
+        this.year = null;
+        this.company = null;
+    }
 
-	public Company getCompany() {
-		return company;
-	}
+    public Integer getYear() {
+        return year;
+    }
 
-	public void setCompany(Company company) {
-		this.company = company;
-	}
+    public void setYear(Integer year) {
+        this.year = year;
+    }
+
+    public String getCompany() {
+        return company;
+    }
+
+    public void setCompany(String company) {
+        this.company = company;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
 }

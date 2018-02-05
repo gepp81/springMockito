@@ -1,93 +1,68 @@
 package ar.com.gep.test.dao.impl;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
 
-import org.springframework.stereotype.Component;
+import javax.persistence.PersistenceException;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import ar.com.gep.test.dao.GenericDAO;
-import ar.com.gep.test.dao.impl.GenericDAOImpl.Company;
-import ar.com.gep.test.entity.Car;
 
 public class GenericDAOImpl<T> implements GenericDAO<T> {
 
-	public enum Company {
+    @Autowired
+    private SessionFactory sessionFactory;
 
-		FIAT("FIAT"), FORD("FORD"), RENAULT("Renault");
+    private Class<T> type;
 
-		Company(String name) {
-		};
+    public GenericDAOImpl(Class<T> type) {
+        this.type = type;
+    }
 
-		public String getName() {
-			return this.name();
-		}
+    public List<T> getAll() {
+        return this.sessionFactory.getCurrentSession().createQuery("from " + this.type.getName()).list();
+    }
 
-	}
+    /*
+     * (non-Javadoc)
+     * 
+     * @see ar.com.gep.test.dao.GenericDAO#getAllByProperty(java.lang.String, java.lang.Object)
+     */
+    @Override
+    public List<T> getAllByProperty(String property, Object value) {
+        if (property == null)
+            throw new PersistenceException("Property cant be null");
+        CriteriaBuilder builder = this.sessionFactory.getCurrentSession().getCriteriaBuilder();
+        CriteriaQuery<T> criteria = builder.createQuery(type);
+        Root<T> from = criteria.from(type);
+        criteria.select(from);
+        criteria.where(builder.equal(from.get(property), value));
+        return this.sessionFactory.getCurrentSession().createQuery(criteria).getResultList();
+    }
 
-	private Class<T> type;
+    @Override
+    public List<T> getAllByProperty(List<String> properties, List<Object> values) {
+        if (properties == null)
+            throw new PersistenceException("Properties cant be null");
+        if (properties.size() > 0)
+            throw new PersistenceException("Properties is empty");
+        if (values == null)
+            throw new PersistenceException("Values list cant be null");
+        if (properties.size() != values.size())
+            throw new PersistenceException("Lists sizes are differents");
+        CriteriaBuilder builder = this.sessionFactory.getCurrentSession().getCriteriaBuilder();
+        CriteriaQuery<T> criteria = builder.createQuery(type);
+        Root<T> from = criteria.from(type);
+        criteria.select(from);
+        for (int i = 0; i < properties.size(); i++) {
+            criteria.where(builder.equal(from.get(properties.get(i)), values.get(i)));
+        }
 
-	public GenericDAOImpl(Class<T> type) {
-		this.type = type;
-	}
-
-	public List<T> getAll() {
-		if (this.type.equals(Car.class)) {
-			return GenericDAOImpl.getListCars();
-		}
-		return new ArrayList<>();
-	}
-
-	public List<Car> getAllByYear(Integer year) {
-		if (this.type.equals(Car.class)) {
-			return GenericDAOImpl.getByYearListCars(year);
-		}
-		return new ArrayList<>();
-	}
-
-	public List<Car> getAllByCompany(Company company) {
-		if (this.type.equals(Car.class)) {
-			return GenericDAOImpl.getByCompanyListCars(company);
-		}
-		return new ArrayList<>();
-	}
-
-	private static <T> List<T> getListCars() {
-		return (List<T>) generateListCars();
-	}
-
-	private static <T> List<T> getByYearListCars(Integer year) {
-		List<Car> generateListCars = generateListCars();
-		generateListCars = generateListCars.stream().filter(item -> item.getYear().equals(year))
-				.collect(Collectors.toList());
-		return (List<T>) generateListCars;
-	}
-
-	private static <T> List<T> getByCompanyListCars(Company company) {
-		List<Car> generateListCars = generateListCars();
-		generateListCars = generateListCars.stream().filter(item -> item.getCompany().equals(company))
-				.collect(Collectors.toList());
-		return (List<T>) generateListCars;
-	}
-
-	private static List<Car> generateListCars() {
-		List<Car> cars = new ArrayList<Car>(5);
-		Car car = new Car(2016, Company.FIAT);
-		cars.add(car);
-
-		car = new Car(2018, Company.FIAT);
-		cars.add(car);
-
-		car = new Car(2015, Company.FIAT);
-		cars.add(car);
-
-		car = new Car(2016, Company.RENAULT);
-		cars.add(car);
-
-		car = new Car(2018, Company.FORD);
-		cars.add(car);
-		return cars;
-	}
+        return this.sessionFactory.getCurrentSession().createQuery(criteria).getResultList();
+    }
 
 }
