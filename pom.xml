@@ -7,6 +7,10 @@
 	<name>Pruebas Test</name>
 	<description>Prueba Test</description>
 
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework</groupId>
