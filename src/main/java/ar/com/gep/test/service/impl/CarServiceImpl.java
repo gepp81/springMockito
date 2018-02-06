@@ -2,8 +2,6 @@ package ar.com.gep.test.service.impl;
 
 import java.util.List;
 
-import javax.transaction.Transactional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -19,19 +17,21 @@ public class CarServiceImpl implements CarService {
     @Qualifier("carDAO")
     private GenericDAO<Car> dao;
 
-    @Transactional
     public List<Car> getAll() {
         return dao.getAll();
     }
 
-    @Transactional
     public List<Car> getAllByYear(Integer year) {
         return dao.getAllByProperty("year", year);
     }
 
-    @Transactional
     public List<Car> getAllByCompany(String company) {
         return dao.getAllByProperty("company", company);
+    }
+
+    @Override
+    public List<Car> getAll(List<String> properties, List<Object> values) {
+        return dao.getAllByProperty(properties, values);
     }
 
 }

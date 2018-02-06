@@ -48,7 +48,7 @@ public class GenericDAOImpl<T> implements GenericDAO<T> {
     public List<T> getAllByProperty(List<String> properties, List<Object> values) {
         if (properties == null)
             throw new PersistenceException("Properties cant be null");
-        if (properties.size() > 0)
+        if (properties.size() == 0)
             throw new PersistenceException("Properties is empty");
         if (values == null)
             throw new PersistenceException("Values list cant be null");
