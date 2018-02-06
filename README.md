@@ -6,8 +6,8 @@ Pruebas con Mockito, PowerMock y Spring para utilizar mocks-beans dentro de otro
 
 Se crea un Service y un GenericDAO para pode ejecutar los test.
 
-# CarSpringTest: son test con base en memoria con el servicio y el dao.
-# CarSpringMockitoTest: son los mismos test con el servicio y el bean-mock del dao.
+* CarSpringTest: son test con base en memoria con el servicio y el dao.
+* CarSpringMockitoTest: son los mismos test con el servicio y el bean-mock del dao.
 
 ## Comentarios
 
