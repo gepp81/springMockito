@@ -33,11 +33,6 @@
 			<version>2.4.0</version>
 			<scope>test</scope>
 		</dependency>
-		<dependency>
-			<groupId>org.apache.tomcat</groupId>
-			<artifactId>tomcat-dbcp</artifactId>
-			<version>9.0.1</version>
-		</dependency>
 
 		<!-- TEST -->
 		<dependency>
@@ -58,13 +53,6 @@
 			<version>1.10.19</version>
 			<scope>test</scope>
 		</dependency>
-		<dependency>
-			<groupId>org.powermock</groupId>
-			<artifactId>powermock-api-mockito</artifactId>
-			<version>1.7.3</version>
-			<scope>test</scope>
-		</dependency>
-
 	</dependencies>
 
 	<build>

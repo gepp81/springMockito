@@ -4,9 +4,9 @@ import java.util.Properties;
 
 import javax.sql.DataSource;
 
-import org.apache.tomcat.dbcp.dbcp2.BasicDataSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.transaction.PlatformTransactionManager;
@@ -28,7 +28,7 @@ public class HibernateConfiguration {
 
     @Bean
     public DataSource dataSource() {
-        BasicDataSource dataSource = new BasicDataSource();
+        DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("org.hsqldb.jdbcDriver");
         dataSource.setUrl("jdbc:hsqldb:mem:pruebas");
         dataSource.setUsername("sa");

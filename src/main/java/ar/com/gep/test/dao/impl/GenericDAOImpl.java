@@ -23,7 +23,8 @@ public class GenericDAOImpl<T> implements GenericDAO<T> {
         this.type = type;
     }
 
-    public List<T> getAll() {
+    @SuppressWarnings("unchecked")
+	public List<T> getAll() {
         return this.sessionFactory.getCurrentSession().createQuery("from " + this.type.getName()).list();
     }
 
@@ -39,7 +40,6 @@ public class GenericDAOImpl<T> implements GenericDAO<T> {
         CriteriaBuilder builder = this.sessionFactory.getCurrentSession().getCriteriaBuilder();
         CriteriaQuery<T> criteria = builder.createQuery(type);
         Root<T> from = criteria.from(type);
-        criteria.select(from);
         criteria.where(builder.equal(from.get(property), value));
         return this.sessionFactory.getCurrentSession().createQuery(criteria).getResultList();
     }
@@ -57,7 +57,6 @@ public class GenericDAOImpl<T> implements GenericDAO<T> {
         CriteriaBuilder builder = this.sessionFactory.getCurrentSession().getCriteriaBuilder();
         CriteriaQuery<T> criteria = builder.createQuery(type);
         Root<T> from = criteria.from(type);
-        criteria.select(from);
         for (int i = 0; i < properties.size(); i++) {
             criteria.where(builder.equal(from.get(properties.get(i)), values.get(i)));
         }
