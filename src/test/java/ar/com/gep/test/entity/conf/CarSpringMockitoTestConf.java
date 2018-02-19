@@ -9,7 +9,7 @@ import ar.com.gep.test.dao.impl.GenericDAOImpl;
 import ar.com.gep.test.entity.Car;
 
 @Configuration
-@ComponentScan(basePackages = { "ar.com.gep.test.service.impl", "ar.com.gep.test.dao.impl" })
+@ComponentScan(basePackages = { "ar.com.gep.test.service.impl" })
 public class CarSpringMockitoTestConf {
 	
 	@Bean(name = "carDAO")
