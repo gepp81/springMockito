@@ -11,10 +11,10 @@ import ar.com.gep.test.entity.Car;
 @Configuration
 @ComponentScan(basePackages = { "ar.com.gep.test.service.impl" })
 public class CarSpringMockitoTestConf {
-	
-	@Bean(name = "carDAO")
-	public GenericDAOImpl<Car> getCarDAO() {
-		return Mockito.mock(GenericDAOImpl.class);
-	}
+
+    @Bean(name = "carDAO")
+    public GenericDAOImpl<Car> getCarDAO() {
+        return Mockito.mock(GenericDAOImpl.class);
+    }
 
 }

@@ -8,12 +8,12 @@ import ar.com.gep.test.dao.impl.GenericDAOImpl;
 import ar.com.gep.test.entity.Car;
 
 @Configuration
-@ComponentScan(basePackages = { "ar.com.gep.test.service.impl"})
+@ComponentScan(basePackages = { "ar.com.gep.test.service.impl" })
 public class CarSpringTestConf {
-	
-	@Bean(name = "carDAO")
-	public GenericDAOImpl<Car> getCarDAO() {
-		return new GenericDAOImpl<Car>(Car.class);
-	}
+
+    @Bean(name = "carDAO")
+    public GenericDAOImpl<Car> getCarDAO() {
+        return new GenericDAOImpl<Car>(Car.class);
+    }
 
 }
